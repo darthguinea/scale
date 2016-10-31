@@ -1,0 +1,6 @@
+scale.*
+example.py
+dist
+build
+*.swp
+*.pyc
