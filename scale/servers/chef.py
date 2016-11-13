@@ -11,7 +11,8 @@ class ChefServer(Server):
                             disks=[],
                             user_data=None,
                             instance_type='m3.medium',
-                            availability_zone=None):
+                            availability_zone=None,
+                            keypair='~/.ssh/stage.pem'):
 
     self.name = name
     self.dry_run = dry_run
@@ -21,11 +22,15 @@ class ChefServer(Server):
     self.instance_type = instance_type
     self.disks = disks
     self.tags = tags
+    self.user_data = user_data
+    self.keypair = keypair
 
     super(ChefServer, self).__init__(ec2_environment=ec2_environment)
 
   
   def bake(self):
+
     self.log.info('Building Chef Server!')
+
     super(ChefServer, self).bake()
 
