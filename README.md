@@ -7,3 +7,9 @@
     ```
 
 ## How to use
+
+    ```
+    import scale.server
+
+
+    ```

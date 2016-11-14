@@ -9,8 +9,11 @@ class Name(object):
 
 
     def getServerName(self, format='{env[0]}-{group}'):
-
-      return format.format(env=self.environment, 
+      value = format.format(env=self.environment, 
                               group=self.group)
-    
-    
+ 
+      return value   
+
+
+    def getIndex(self):
+      return '00'
