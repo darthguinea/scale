@@ -29,9 +29,7 @@ class Server(Config):
 
       super(Server, self).__init__(ec2_environment=ec2_environment)
 
-
     def bake(self):
-
         self.log.info('Starting server build')
 
         try:
@@ -56,6 +54,5 @@ class Server(Config):
             i.create_tags(Tags=self.tags)
 
         except Exception as e:
-
           self.log.error('Did not create instance due to [{e}]'.format(e=e))
 

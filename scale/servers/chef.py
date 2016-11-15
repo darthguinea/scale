@@ -26,11 +26,8 @@ class ChefServer(Server):
     self.keypair = keypair
 
     super(ChefServer, self).__init__(ec2_environment=ec2_environment)
-
   
   def bake(self):
-
     self.log.info('Building Chef Server!')
-
     super(ChefServer, self).bake()
 
