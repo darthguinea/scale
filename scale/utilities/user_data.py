@@ -10,7 +10,7 @@ class UserData(object):
                 environment='stage',
                 encrypted_data_bag_file='~/.chef/encrypted_data_bag_secret',
                 chef_key_file='~/.chef/chef-validator.pem',
-                user_data_file='linux-user-data',
+                user_data_file='ubuntu-user-data',
                 org='my-org',
                 chef_url='chef.mydomain.com'):
 
@@ -21,19 +21,18 @@ class UserData(object):
 
         # Now load chef validator key:
         if chef_key_file is not None:
-            try:
-                chef_key = expanduser(chef_key_file)
-                key = open(chef_key, 'r').read()
+          chef_key = expanduser(chef_key_file)
+          key = open(chef_key, 'r').read()
+          encrypted_data_bag = expanduser(encrypted_data_bag_file) 
+          encrypted_data_bag_secret = open(encrypted_data_bag, 'r').read()
 
-                encrypted_data_bag = expanduser(encrypted_data_bag_file) 
-                encrypted_data_bag_secret = open(encrypted_data_bag, 'r').read()
+          return user_data.format(role=role, 
+                                    encrypted_data_bag=encrypted_data_bag_secret,
+                                    validation_key=key,
+                                    environment=environment,
+                                    chef_url=chef_url,
+                                    org=org)
 
-                return user_data.format(role=role, 
-                                        encrypted_data_bag=encrypted_data_bag_secret,
-                                        validation_key=key,
-                                        environment=environment)
-            except:
-                exit(1)
         else:
-            return user_data
+          return user_data
 

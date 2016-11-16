@@ -55,7 +55,6 @@ class Config(object):
 
         self.config = config
 
-
     def create_aws_session(self):
         self.region = self.config.get(self.ec2_environment, 'region')
 
