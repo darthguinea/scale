@@ -11,29 +11,34 @@ class Server(Config):
                             environment='stage',
                             tags=[],
                             disks=[],
-                            user_data=None,
+                            user_data='',
                             instance_type='m3.medium',
+                            security_group_ids=[],
                             availability_zone=None,
                             keypair='~/.ssh/stage.pem',
                             ):
-      self.name = name
-      self.dry_run = dry_run
-      self.ami = ami
-      self.environment = environment
-      self.availability_zone = availability_zone
-      self.instance_type = instance_type
-      self.disks = disks
-      self.tags = tags
-      self.user_data = user_data
-      self.keypair = keypair
+        self.name = name
+        self.dry_run = dry_run
+        self.ami = ami
+        self.environment = environment
+        self.availability_zone = availability_zone
+        self.instance_type = instance_type
+        self.disks = disks
+        self.tags = tags
+        self.user_data = user_data
+        self.security_group_ids = security_group_ids
+        self.keypair = keypair
 
-      super(Server, self).__init__(ec2_environment=ec2_environment)
+        super(Server, self).__init__(ec2_environment=ec2_environment)
+
+    def configure(self):
+        
 
     def bake(self):
         self.log.info('Starting server build')
 
         try:
-          params = {
+            params = {
                 'DryRun': self.dry_run,
                 'ImageId': self.ami,
                 'InstanceType': self.instance_type,
@@ -42,17 +47,18 @@ class Server(Config):
                 'SecurityGroupIds': self.security_group_ids,
                 'MinCount': 1,
                 'MaxCount': 1,
-                'SubnetId': self.subnet,
                 'Placement': {
                     'AvailabilityZone': '{region}{az}'.format(region=self.region,
-                                            az=self.availability_zone)
+                    az=self.availability_zone)
                     }
-                }
-          instances = ec2.create_instances(**params)
+            }
 
-          for i in instances:
-            i.create_tags(Tags=self.tags)
+            ec2 = self.session.resource('ec2')
+            instances = ec2.create_instances(**params)
+
+            for i in instances:
+                i.create_tags(Tags=self.tags)
 
         except Exception as e:
-          self.log.error('Did not create instance due to [{e}]'.format(e=e))
+            self.log.error('Did not create instance due to [{e}]'.format(e=e))
 
