@@ -1,4 +1,5 @@
 ## Scale (README.md)
+Use this applcation to deploy new EC2 servers
 
 ## Install
 
