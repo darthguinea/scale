@@ -10,7 +10,8 @@ python setup.py install
 ## How to use
 
 ```
-import scale.server
+import scale.server.server
 
+s = Server()
 
 ```
