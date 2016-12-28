@@ -16,6 +16,7 @@ class Server(Config):
                             user_data='',
                             instance_type='m3.medium',
                             security_group_ids=[],
+                            region=None,
                             availability_zone=None,
                             security_group=None,
                             keypair='~/.ssh/stage.pem',
@@ -25,6 +26,7 @@ class Server(Config):
         self.ami = ami
         self.environment = environment
         self.chef_role = chef_role
+        self.region = region
         self.availability_zone = availability_zone
         self.instance_type = instance_type
         self.disks = disks
@@ -52,8 +54,6 @@ class Server(Config):
                 'ImageId': self.ami,
                 'InstanceType': self.instance_type,
                 'KeyName': self.keypair,
-                'UserData': self.user_data,
-                'SecurityGroupIds': self.security_group_ids,
                 'MinCount': 1,
                 'MaxCount': 1,
                 'Placement': {
@@ -61,6 +61,7 @@ class Server(Config):
                                                                 az=self.availability_zone)
                 }
             }
+
 
             ec2 = self.session.resource('ec2')
             instances = ec2.create_instances(**params)
