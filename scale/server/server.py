@@ -1,74 +1,51 @@
 import random
 from scale.config import Config
-from scale.utilities.tags import Tags
-from scale.utilities.user_data import UserData
+
 
 class Server(Config):
-
     def __init__(self, ec2_environment='default',
-                            name=None,
-                            dry_run=False,
-                            ami='ami-d8bdebb8',
-                            environment='stage',
-                            chef_role=None,
-                            tags=[],
-                            disks=[],
-                            user_data='',
-                            instance_type='m3.medium',
-                            security_group_ids=[],
-                            region=None,
-                            availability_zone=None,
-                            security_group=None,
-                            keypair='~/.ssh/stage.pem',
-                            ):
-        self.name = name
-        self.dry_run = dry_run
-        self.ami = ami
+                    environment='stage',
+                    ami='ami-d8bdebb8',
+                    instance_type='t2.nano',
+                    keypair=None,
+                    region='us-east-1',
+                    az=None,
+                    dry_run=False):
+        self.ec2_environment = ec2_environment
         self.environment = environment
-        self.chef_role = chef_role
-        self.region = region
-        self.availability_zone = availability_zone
+        self.ami = ami
         self.instance_type = instance_type
-        self.disks = disks
-        self.tags = tags
-        self.user_data = user_data
-        self.security_group_ids = security_group_ids
         self.keypair = keypair
+        self.region = region
+        self.az = az
+        self.dry_run = dry_run
+
+        super(Server, self).__init__(ec2_environment=ec2_environment, region=self.region)
 
         self.configure()
 
-        super(Server, self).__init__(ec2_environment=ec2_environment)
-
-
     def configure(self):
-        if self.availability_zone is None:
-            self.availability_zone = random.sample(['a', 'b', 'c'], 1)[0]
-        
+        if self.az is None:
+            self.az = random.sample(['a', 'b', 'c'], 1)[0]
+            self.log.warn('AZ not set, picking random one [{az}]'.format(az=self.az))
+
+        if self.keypair is None:
+            self.log.error('No SSH key defined')
+            exit(1)
 
     def bake(self):
         self.log.info('Starting server build')
+    
+        params = {
+            'DryRun': self.dry_run,
+            'ImageId': self.ami,
+            'KeyName': self.keypair,
+            'InstanceType': self.instance_type,
+            'MinCount': 1,
+            'MaxCount': 1
+        }
 
-        try:
-            params = {
-                'DryRun': self.dry_run,
-                'ImageId': self.ami,
-                'InstanceType': self.instance_type,
-                'KeyName': self.keypair,
-                'MinCount': 1,
-                'MaxCount': 1,
-                'Placement': {
-                    'AvailabilityZone': '{region}{az}'.format(region=self.region,
-                                                                az=self.availability_zone)
-                }
-            }
-
-
-            ec2 = self.session.resource('ec2')
-            instances = ec2.create_instances(**params)
-
-            for i in instances:
-                i.create_tags(Tags=self.tags)
-
-        except Exception as e:
-            self.log.error('Did not create instance due to [{e}]'.format(e=e))
+        ec2 = self.session.resource('ec2')
+        ec2.create_instances(DryRun=False, ImageId='ami-d8bdebb8', InstanceType='t2.nano', MinCount=1, MaxCount=1)
+        
 

@@ -17,8 +17,11 @@ class Config(object):
         'us-west-2': 'usw2',
     }
 
-    def __init__(self, config_files=None, ec2_environment='default'):
+    def __init__(self, config_files=None, 
+                    ec2_environment='default',
+                    region=None):
         self.ec2_environment = ec2_environment
+        self.region = region
 
         self.establish_logger()
         self.log.info('Loading Scale, using environment [{env}]'.format(env=ec2_environment))
@@ -56,11 +59,18 @@ class Config(object):
         self.config = config
 
     def create_aws_session(self):
-        self.region = self.config.get(self.ec2_environment, 'region')
+        if self.region is None:
+            self.region = self.config.get(self.ec2_environment, 'region')
 
-        self.session = Session(
-            aws_access_key_id=self.config.get(self.ec2_environment, 'aws_access_key_id'),
-            aws_secret_access_key=self.config.get(self.ec2_environment, 'aws_secret_access_key'),
-            region_name=self.region
-            )
+        try:
+            self.session = Session(
+                aws_access_key_id=self.config.get(self.ec2_environment, 'aws_access_key_id'),
+                aws_secret_access_key=self.config.get(self.ec2_environment, 'aws_secret_access_key'),
+                region_name=self.region
+                )
+            self.log.info('Using region [{region}]'.format(region=self.region))
+        except ConfigParser.NoOptionError:
+            self.log.error('Could not load the config setting, check '\
+                                'that the profile [{env}] exists'.format(env=self.ec2_environment))
+            exit(1)
 
