@@ -1,4 +1,5 @@
 import random
+import botocore
 from scale.config import Config
 
 
@@ -46,6 +47,12 @@ class Server(Config):
         }
 
         ec2 = self.session.resource('ec2')
-        ec2.create_instances(DryRun=False, ImageId='ami-d8bdebb8', InstanceType='t2.nano', MinCount=1, MaxCount=1)
-        
+        try:
+            ec2.create_instances(**params)
+        except botocore.exceptions.ClientError as e:
+            if e.response['Error']['Code'] == 'InvalidAMIID.NotFound':
+                self.log.error('AMI [{ami}] not found, AMIs are region based '\
+                                    'try changing region or updating your AMI image'.format(ami=self.ami))
+            else:
+                self.log.error('Unexpected error: {e}'.format(e=e))
 
