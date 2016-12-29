@@ -10,8 +10,7 @@ python setup.py install
 ## How to use
 
 ```
-import scale.server.server
+from scale.server.server import Server
 
-s = Server()
-
+Server(keypair='~/.ssh/stage.pem', ec2_environment='default', region='us-west-1')
 ```
