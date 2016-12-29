@@ -11,6 +11,8 @@ class Server(Config):
                     keypair=None,
                     region='us-east-1',
                     az=None,
+                    name=None,
+                    tags=[],
                     dry_run=False):
         self.ec2_environment = ec2_environment
         self.environment = environment
@@ -19,6 +21,8 @@ class Server(Config):
         self.keypair = keypair
         self.region = region
         self.az = az
+        self.name = name
+        self.tags = tags
         self.dry_run = dry_run
 
         super(Server, self).__init__(ec2_environment=ec2_environment, region=self.region)
@@ -34,6 +38,9 @@ class Server(Config):
             self.log.error('No SSH key defined')
             exit(1)
 
+        if self.name is not None:
+            self.tags.append({'Key': 'Name', 'Value': self.name})
+
     def bake(self):
         self.log.info('Starting server build')
     
@@ -47,8 +54,14 @@ class Server(Config):
         }
 
         ec2 = self.session.resource('ec2')
+
         try:
-            ec2.create_instances(**params)
+            instances = ec2.create_instances(**params)
+
+            if len(self.tags) > 0:
+                for instance in instances:
+                    instance.create_tags(Tags=self.tags)
+
         except botocore.exceptions.ClientError as e:
             if e.response['Error']['Code'] == 'InvalidAMIID.NotFound':
                 self.log.error('AMI [{ami}] not found, AMIs are region based '\
