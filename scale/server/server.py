@@ -23,8 +23,6 @@ class Server(Config):
 
         super(Server, self).__init__(ec2_environment=ec2_environment, region=self.region)
 
-        self.configure()
-
     def configure(self):
         if self.az is None:
             self.az = random.sample(['a', 'b', 'c'], 1)[0]
@@ -34,8 +32,10 @@ class Server(Config):
             self.log.error('No SSH key defined')
             exit(1)
 
-    def bake(self):
+    def create(self):
         self.log.info('Starting server build')
+
+        self.configure()
     
         params = {
             'DryRun': self.dry_run,
@@ -47,6 +47,7 @@ class Server(Config):
         }
 
         ec2 = self.session.resource('ec2')
+
         try:
             ec2.create_instances(**params)
         except botocore.exceptions.ClientError as e:
