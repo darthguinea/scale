@@ -56,3 +56,27 @@ my_sg_id = SecurityGroup(name='p-web', region='us-west-1', description='web serv
 Server(keypair='stage', security_groups=[my_sg_id], ec2_environment='default', region='us-west-1', name='my_awesome_server').create()
 
 ```
+
+This is an example of creating a `Security Group`, adding rules to it, then deleting all of the rules:
+```
+from scale.networking.security_group import SecurityGroup
+
+rules = [{"IP": "10.0.2.1/32", 'FromPort': "80", 'ToPort': "80", 'Protocol': "tcp"}, 
+        {"IP": "172.16.32.1/32", 'FromPort': "80", 'ToPort': "80", 'Protocol': "tcp"}]
+
+sg = SecurityGroup(name='p-web', region='us-west-1', description='web server sg', rules=rules)
+
+sg.create()
+
+sg.delete_all_rules()
+```
+
+Adding and removing rules manually:
+```
+sg = SecurityGroup(name='p-web', region='us-west-1', description='web server sg')
+
+sg.add(rules=rules)
+
+sg.delete(rules=[{"IP": "172.16.32.1/32", 'FromPort': "80", 'ToPort': "80", 'Protocol': "tcp"}])
+```
+
