@@ -75,6 +75,7 @@ SecurityGroup()
 ```
 
 ***Params for SecurityGroup():***
+
 | Parameter | Required | Default Value | Description |
 | --- | --- | --- | --- |
 | ec2_environment | N | 'default' | Set the AWS environment, profiles are in ~/.aws/credentials |
@@ -87,6 +88,7 @@ SecurityGroup()
 
 
 ***Functions for SecurityGroup():***
+
 | Parameter | Description |
 | --- | --- |
 | create() | Create Security Group |
