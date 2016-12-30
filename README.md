@@ -1,7 +1,15 @@
 # Scale (README.md)
 Use this applcation to deploy new EC2 servers
 
-## Install
+Table of contents
+=================
+
+  * [Installation](#installation)
+  * [Basic Usage](#basic-usage)
+  * [Tags](#tags)
+
+
+## Installation
 
 Download the latest source, and unzip:
 ```bash
@@ -26,7 +34,7 @@ EOF
 python example.py
 ```
 
-## How to use, basic server build:
+## Basic Usage:
 
 ```python
 from scale.server.server import Server
