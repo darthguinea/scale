@@ -67,27 +67,39 @@ Server(keypair='stage', ec2_environment='default', region='us-west-1', tags=my_t
 
 ## Security Groups:
 
-Params for SecurityGroup():
-
+### Basic usage:
 ```
 from scale.network.security_group import SecurityGroup
 
 SecurityGroup()
 ```
 
+***Params for SecurityGroup():***
 | Parameter | Required | Default Value | Description |
 | --- | --- | --- | --- |
 | ec2_environment | N | 'default' | Set the AWS environment, profiles are in ~/.aws/credentials |
 | region | N | 'us-west-1' | Set AWS region, i.e. `us-east-1`, `us-west-2` |
-| group_id | **Y**  | None | Security Group Id |
-| name | **Y** | None | Security Group Name |
+| group_id | **Y**  | None | Security Group Id *Either group_id or name must be specified* |
+| name | **Y** | None | Security Group Name *Either group_id or name must be specified* |
 | description | Y | None | Description of the security group |
 | vpc_id | N | None | The VPC Id to associate the security group with |
 | rules=[] | N | None | List of rules to add to the Security Group |
-**Either group_id or name must be specified**
 
 
-`create()` does not have any parameters, it creates the Security Group based on the values passed into the class.
+***Functions for SecurityGroup():***
+| Parameter | Description |
+| --- | --- |
+| create() | Create Security Group |
+| add() | Add list of rules |
+| add_rule() | Add single rule |
+| delete() | Delete list of rules |
+| delete_rule() | Delete single rule |
+| delete_all_rules() | Delete all of the rules associated to the SG |
+| delete_group() | Delete the security group |
+| get_existing_sg_id() | Find security group using name |
+
+
+`.create()` does not have any parameters, it creates the Security Group based on the values passed into the class.
 ```
 sg = SecurityGroup()
 sg.create()
