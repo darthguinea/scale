@@ -27,8 +27,6 @@ class Server(Config):
 
         super(Server, self).__init__(ec2_environment=ec2_environment, region=self.region)
 
-        self.configure()
-
     def configure(self):
         if self.az is None:
             self.az = random.sample(['a', 'b', 'c'], 1)[0]
@@ -41,8 +39,11 @@ class Server(Config):
         if self.name is not None:
             self.tags.append({'Key': 'Name', 'Value': self.name})
 
-    def bake(self):
+
+    def create(self):
         self.log.info('Starting server build')
+
+        self.configure()
     
         params = {
             'DryRun': self.dry_run,

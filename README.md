@@ -27,3 +27,5 @@ my_tags.add('environment', 'stage')
 
 Server(keypair='stage', ec2_environment='default', region='us-west-1', tags=my_tags.get()).create()
 ```
+
+
