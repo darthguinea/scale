@@ -4,12 +4,12 @@ Use this applcation to deploy new EC2 servers
 ##Install
 
 ```
-#Once downloaded, in the scale folder using terminal run:
+# Once downloaded, in the scale folder using terminal run:
 
 python setup.py install
 
 
-#Create an .py file (in this case, example.py):
+# Create an .py file (in this case, example.py):
 
 cat >> example.py << EOF
 from scale.server.server import Server
