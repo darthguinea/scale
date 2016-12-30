@@ -66,6 +66,9 @@ Server(keypair='stage', ec2_environment='default', region='us-west-1', tags=my_t
 
 
 ## Security Groups:
+
+Params for `SecurityGroup()`, import using `from scale.network.security_group import SecurityGroup`:
+
 | Parameter | Required | Default Value | Description |
 | --- | --- | --- | --- |
 | ec2_environment | N | 'default' | Set the AWS environment, profiles are in ~/.aws/credentials |
@@ -77,7 +80,7 @@ Server(keypair='stage', ec2_environment='default', region='us-west-1', tags=my_t
 | rules=[] | N | None | List of rules to add to the Security Group |
 
 
-
+Create security group & server then add the security group to the server:
 ```python
 from scale.server.server import Server
 from scale.networking.security_group import SecurityGroup
