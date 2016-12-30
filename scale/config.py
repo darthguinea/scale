@@ -24,7 +24,8 @@ class Config(object):
         self.region = region
 
         self.establish_logger()
-        self.log.info('Loading Scale, using environment [{env}]'.format(env=ec2_environment))
+        self.log.info('Using environment [{env}] region [{region}]'\
+                        .format(env=ec2_environment, region=region))
         self.load_config_files(config_files=config_files)
         self.create_aws_session()
 
@@ -53,7 +54,6 @@ class Config(object):
 
         config = ConfigParser.ConfigParser()
         for file in config_files:
-            self.log.info('Loading config file [{file}]'.format(file=file))
             config.read(file)
 
         self.config = config
@@ -68,7 +68,6 @@ class Config(object):
                 aws_secret_access_key=self.config.get(self.ec2_environment, 'aws_secret_access_key'),
                 region_name=self.region
                 )
-            self.log.info('Using region [{region}]'.format(region=self.region))
         except ConfigParser.NoOptionError:
             self.log.error('Could not load the config setting, check '\
                                 'that the profile [{env}] exists'.format(env=self.ec2_environment))
