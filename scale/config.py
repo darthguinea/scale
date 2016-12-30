@@ -19,7 +19,7 @@ class Config(object):
 
     def __init__(self, config_files=None, 
                     ec2_environment='default',
-                    region=None):
+                    region='us-west-1'):
         self.ec2_environment = ec2_environment
         self.region = region
 
