@@ -72,12 +72,17 @@ Params for `SecurityGroup()`, import using `from scale.network.security_group im
 | Parameter | Required | Default Value | Description |
 | --- | --- | --- | --- |
 | ec2_environment | N | 'default' | Set the AWS environment, profiles are in ~/.aws/credentials |
-| region | N | None | Set AWS region, i.e. `us-east-1`, `us-west-2` |
+| region | N | 'us-west-1' | Set AWS region, i.e. `us-east-1`, `us-west-2` |
 | group_id | *Y*  | None | Security Group Id |
 | name | *Y* | None | Security Group Name |
 | description | Y | None | Description of the security group |
 | vpc_id | N | None | The VPC Id to associate the security group with |
 | rules=[] | N | None | List of rules to add to the Security Group |
+*Either group_id or name must be specified
+
+
+
+
 
 
 Create security group & server then add the security group to the server:
