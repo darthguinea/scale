@@ -67,22 +67,42 @@ Server(keypair='stage', ec2_environment='default', region='us-west-1', tags=my_t
 
 ## Security Groups:
 
-Params for `SecurityGroup()`, import using `from scale.network.security_group import SecurityGroup`:
+Params for SecurityGroup():
+
+```
+from scale.network.security_group import SecurityGroup
+
+SecurityGroup()
+```
 
 | Parameter | Required | Default Value | Description |
 | --- | --- | --- | --- |
 | ec2_environment | N | 'default' | Set the AWS environment, profiles are in ~/.aws/credentials |
 | region | N | 'us-west-1' | Set AWS region, i.e. `us-east-1`, `us-west-2` |
-| group_id | *Y*  | None | Security Group Id |
-| name | *Y* | None | Security Group Name |
+| group_id | **Y**  | None | Security Group Id |
+| name | **Y** | None | Security Group Name |
 | description | Y | None | Description of the security group |
 | vpc_id | N | None | The VPC Id to associate the security group with |
 | rules=[] | N | None | List of rules to add to the Security Group |
-*Either group_id or name must be specified
+**Either group_id or name must be specified**
 
 
+`create()` does not have any parameters, it creates the Security Group based on the values passed into the class.
+```
+sg = SecurityGroup()
+sg.create()
+```
 
 
+`.add_rule()` is used to add a rule to a security group manually
+```
+.add_rule(self, 
+            group_id=None, 
+            ip="127.0.0.1/32", 
+            from_port=80, 
+            to_port=80, 
+            protocol="tcp")
+```           
 
 
 Create security group & server then add the security group to the server:
