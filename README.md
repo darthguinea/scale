@@ -7,6 +7,7 @@ Table of contents
   * [Installation](#installation)
   * [Basic Usage](#basic-usage)
   * [Tags](#tags)
+  * [Server](#server)
   * [Security Groups](#security-groups)
       * [Adding Rules](#adding-rules)
       * [Deleting Rules](#deleting-rules)
@@ -48,6 +49,25 @@ from scale.server.server import Server
 
 Server(keypair='stage', ec2_environment='default', region='us-west-1', name='my_awesome_server').create()
 ```
+
+
+
+## Server:
+
+***Params for Server():***
+
+| Parameter | Required | Default Value | Description |
+| --- | --- | --- | --- |
+| ec2_environment | N | 'default' | Set the AWS environment, profiles are in ~/.aws/credentials | 
+| environment | N | 'stage' | Set the environment you wish to set for your host, e.g. 'stage', 'prod' | 
+| ami | N | 'ami-d8bdebb8' | The AMI image to use |
+| instance_type | N | 't2.nano' | Instance Type to use for server |
+| keypair | Y | None | EC2 Keypair to use |
+| region | N | 'us-east-1' | EC2 Region to use |
+| az | N | None | Availability zone, if one is not set a random one will be picked |
+| name | N | None | The name of the server |
+| tags | N | [] | List of [Tags](#tags) to use |
+| dry_run | N | False | Test build of the server |
 
 
 
