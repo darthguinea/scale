@@ -8,10 +8,16 @@ Table of contents
   * [Basic Usage](#basic-usage)
   * [Tags](#tags)
   * [Server](#server)
+      * [Server Params](#server-params)
+      * [Server Functions](#server-functions)
+      * [Examples](#examples)
   * [Security Groups](#security-groups)
-      * [Adding Rules](#adding-rules)
-      * [Deleting Rules](#deleting-rules)
-      * [Deleting All Rules](#deleting-all-rules)
+      * [Security Group Params](#security-group-params)
+      * [Security Group Functions](#security-group-functions)
+      * [Examples](#examples)
+          * [Adding Rules](#adding-rules)
+          * [Deleting Rules](#deleting-rules)
+          * [Deleting All Rules](#deleting-all-rules)
 
 
 
@@ -42,19 +48,9 @@ python example.py
 
 
 
-## Basic Usage:
-
-```python
-from scale.server.server import Server
-
-Server(keypair='stage', ec2_environment='default', region='us-west-1', name='my_awesome_server').create()
-```
-
-
-
 ## Server:
 
-***Params for Server():***
+### Server Params
 
 | Parameter | Required | Default Value | Description |
 | --- | --- | --- | --- |
@@ -68,6 +64,24 @@ Server(keypair='stage', ec2_environment='default', region='us-west-1', name='my_
 | name | N | None | The name of the server |
 | tags | N | [] | List of [Tags](#tags) to use |
 | dry_run | N | False | Test build of the server |
+
+
+
+### Server Functions
+
+| Function | Description |
+| --- | --- |
+| create() | Create Server | 
+
+
+
+### Example Usage
+
+```python
+from scale.server.server import Server
+
+Server(keypair='stage', ec2_environment='default', region='us-west-1', name='my_awesome_server').create()
+```
 
 
 
@@ -94,7 +108,7 @@ from scale.network.security_group import SecurityGroup
 SecurityGroup()
 ```
 
-***Params for SecurityGroup():***
+### Security Group Params
 
 | Parameter | Required | Default Value | Description |
 | --- | --- | --- | --- |
@@ -107,7 +121,7 @@ SecurityGroup()
 | rules=[] | N | None | List of rules to add to the Security Group |
 
 
-***Functions for SecurityGroup():***
+### Security Group Functions
 
 | Function | Description |
 | --- | --- |
@@ -139,6 +153,8 @@ sg.create()
 ```           
 
 
+### Examples
+
 Create security group & server then add the security group to the server:
 ```python
 from scale.server.server import Server
@@ -162,7 +178,7 @@ Server(keypair='stage', security_groups=[my_sg_id],
 
 
 
-### Adding Rules:
+#### Adding Rules:
 ```
 sg = SecurityGroup(name='p-web', region='us-west-1', description='web server sg')
 
@@ -174,7 +190,7 @@ sg.add(rules=rules)
 
 
 
-### Deleting Rules:
+#### Deleting Rules:
 ```python
 sg = SecurityGroup(name='p-web', region='us-west-1', description='web server sg')
 
@@ -185,7 +201,7 @@ sg.delete(rules=[{"IP": "172.16.32.1/32", 'FromPort': "80", 'ToPort': "80", 'Pro
 
 
 
-### Deleting All Rules:
+#### Deleting All Rules:
 This is an example of creating a `Security Group`, adding rules to it, then deleting all of the rules:
 ```python
 from scale.networking.security_group import SecurityGroup
