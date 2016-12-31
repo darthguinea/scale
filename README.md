@@ -89,19 +89,16 @@ SecurityGroup()
 
 ***Functions for SecurityGroup():***
 
-| Function | Description | Parameters |
-| --- | --- | --- |
-| create() | Create Security Group | None |
-| add() | Add list of rules | 
-                                **group_id=None** - Security Group Id 
-                                **rules=[]** - List of rules 
-                            |
-| add_rule() | Add single rule | |
-| delete() | Delete list of rules | |
-| delete_rule() | Delete single rule | |
-| delete_all_rules() | Delete all of the rules associated to the SG | |
-| delete_group() | Delete the security group | |
-| get_existing_sg_id() | Find security group using name ||
+| Function | Description |
+| --- | --- |
+| create() | Create Security Group | 
+| add() | Add list of rules |
+| add_rule() | Add single rule |
+| delete() | Delete list of rules |
+| delete_rule() | Delete single rule |
+| delete_all_rules() | Delete all of the rules associated to the SG |
+| delete_group() | Delete the security group |
+| get_existing_sg_id() | Find security group using name |
 
 
 `.create()` does not have any parameters, it creates the Security Group based on the values passed into the class.
