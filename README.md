@@ -90,11 +90,11 @@ SecurityGroup()
 ***Functions for SecurityGroup():***
 
 | Function | Description | Parameters |
-| --- | --- | -- |
+| --- | --- | --- |
 | create() | Create Security Group | None |
 | add() | Add list of rules | 
-                                **group_id=None,** - Security Group Id
-                                **rules=[]** - List of rules
+                                **group_id=None** - Security Group Id 
+                                **rules=[]** - List of rules 
                             |
 | add_rule() | Add single rule | |
 | delete() | Delete list of rules | |
