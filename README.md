@@ -11,6 +11,10 @@ Table of contents
       * [Server Params](#server-params)
       * [Server Functions](#server-functions)
       * [Examples](#examples)
+  * [Disks](#disks)
+      * [Disks Params](#disks-params)
+      * [Disks Functions](#disks-functions)
+      * [Examples](#examples)
   * [Security Groups](#security-groups)
       * [Security Group Params](#security-group-params)
       * [Security Group Functions](#security-group-functions)
@@ -75,12 +79,46 @@ python example.py
 
 
 
-### Example Usage
+### Examples:
 
 ```python
 from scale.server.server import Server
 
 Server(keypair='stage', ec2_environment='default', region='us-west-1', name='my_awesome_server').create()
+```
+
+
+## Disks:
+
+### Disks Parameters
+
+No parameters for Disks
+
+| Parameter | Required | Default Value | Description |
+| --- | --- | --- | --- |
+
+
+### Disks Functions
+
+| Function | Description |
+| --- | --- |
+| add() | Create virtual disk | 
+| get() | Return disks object | 
+
+
+# Examples:
+
+```python
+from scale.server.disks import Disks
+from scale.server.server import Server
+
+disks = Disks()
+
+disks.add(volume_size=100, device='/dev/xvda')
+disks.add(volume_size=1024, device='/dev/xvdf')
+
+Server(keypair='stage', ec2_environment='default', region='us-west-1', **disks=disks**).create()
+
 ```
 
 
@@ -94,19 +132,13 @@ my_tags = Tags()
 my_tags.add('chef_role', 'webserver')
 my_tags.add('environment', 'stage')
 
-Server(keypair='stage', ec2_environment='default', region='us-west-1', tags=my_tags.get()).create()
+Server(keypair='stage', ec2_environment='default', region='us-west-1', **tags=my_tags.get()**).create()
 ```
 
 
 
 ## Security Groups:
 
-### Basic usage:
-```
-from scale.network.security_group import SecurityGroup
-
-SecurityGroup()
-```
 
 ### Security Group Params
 
@@ -153,7 +185,7 @@ sg.create()
 ```           
 
 
-### Examples
+### Examples:
 
 Create security group & server then add the security group to the server:
 ```python
@@ -177,9 +209,8 @@ Server(keypair='stage', security_groups=[my_sg_id],
 ```
 
 
-
 #### Adding Rules:
-```
+```python
 sg = SecurityGroup(name='p-web', region='us-west-1', description='web server sg')
 
 rules = [{"IP": "10.0.2.1/32", 'FromPort': "80", 'ToPort': "80", 'Protocol': "tcp"}, 
