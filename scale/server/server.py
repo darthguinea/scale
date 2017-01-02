@@ -13,6 +13,7 @@ class Server(Config):
                     az=None,
                     name=None,
                     tags=[],
+                    disks=[],
                     dry_run=False):
         self.ec2_environment = ec2_environment
         self.environment = environment
@@ -23,6 +24,7 @@ class Server(Config):
         self.az = az
         self.name = name
         self.tags = tags
+        self.disks = disks
         self.dry_run = dry_run
 
         super(Server, self).__init__(ec2_environment=ec2_environment, region=self.region)
@@ -46,13 +48,16 @@ class Server(Config):
         self.configure()
     
         params = {
-            'DryRun': self.dry_run,
             'ImageId': self.ami,
             'KeyName': self.keypair,
             'InstanceType': self.instance_type,
             'MinCount': 1,
-            'MaxCount': 1
+            'MaxCount': 1,
+            'DryRun': self.dry_run
         }
+
+        if len(self.disks) > 0:
+            params['BlockDeviceMappings'] = self.disks
 
         ec2 = self.session.resource('ec2')
 
