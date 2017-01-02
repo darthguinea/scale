@@ -109,11 +109,14 @@ No parameters for Disks
 
 #### Function Parameters
 
-| Function | Params             | Description                                                   |
-| ---      | ---                | ---                                                           |
-| add()    | name               | Device Name                                                   |
-|          | volume_size        | Disk Size                                                     |
-|          | device             | System device, e.g. /dev/xvda, /dev/sda1                      |
+| Function | Params             | Default       | Description                                   |
+| ---      | ---                | ---           | ---                                           |
+| add()    | name               | None          | Device Name                                   |
+|          | volume_size        | 8Gb           | Disk Size                                     |
+|          | device             | '/dev/sda1'   | System device, e.g. /dev/xvda, /dev/sda1      |
+|          | encrypted          | False         | Encrypt disk                                  |
+|          | volume_type        | gp2           | Can be 'standard'|'io1'|'gp2'|'sc1'|'st1'     |
+|          | iops               | 100           | Only required when volume_type is iops        |
 |          |                    |                                                               |
 | get()    |                    | Return devices                                                |
 
