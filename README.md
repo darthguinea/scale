@@ -14,6 +14,7 @@ Table of contents
   * [Disks](#disks)
       * [Disks Params](#disks-params)
       * [Disks Functions](#disks-functions)
+      * [Function Parameters](#function-parameters)
       * [Examples](#examples)
   * [Security Groups](#security-groups)
       * [Security Group Params](#security-group-params)
@@ -101,9 +102,20 @@ No parameters for Disks
 ### Disks Functions
 
 | Function | Description |
-| --- | --- |
-| add() | Create virtual disk | 
-| get() | Return disks object | 
+| --- | --- | --- |
+| add() | Create virtual disk |
+| get() | Return disks object |
+
+
+#### Function Parameters
+
+| Function | Params             | Description                                                   |
+| ---      | ---                | ---                                                           |
+| add()    | name               | Device Name                                                   |
+|          | volume_size        | Disk Size                                                     |
+|          | device             | System device, e.g. /dev/xvda, /dev/sda1                      |
+|          |                    |                                                               |
+| get()    |                    | Return devices                                                |
 
 
 # Examples:
@@ -117,7 +129,7 @@ disks = Disks()
 disks.add(volume_size=100, device='/dev/xvda')
 disks.add(volume_size=1024, device='/dev/xvdf')
 
-Server(keypair='stage', ec2_environment='default', region='us-west-1', **disks=disks**).create()
+Server(keypair='stage', ec2_environment='default', region='us-west-1', **disks=disks.get()**).create()
 
 ```
 
