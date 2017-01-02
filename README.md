@@ -129,7 +129,7 @@ from scale.server.server import Server
 
 disks = Disks()
 
-disks.add(volume_size=100, device='/dev/xvda')
+disks.add(volume_size=100, device='/dev/sda1')
 disks.add(volume_size=1024, device='/dev/xvdf')
 
 Server(keypair='stage', ec2_environment='default', region='us-west-1', **disks=disks.get()**).create()
