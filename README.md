@@ -14,6 +14,7 @@ Table of contents
   * [Disks](#disks)
       * [Disks Params](#disks-params)
       * [Disks Functions](#disks-functions)
+      * [Function Parameters](#function-parameters)
       * [Examples](#examples)
   * [Security Groups](#security-groups)
       * [Security Group Params](#security-group-params)
