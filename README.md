@@ -68,8 +68,7 @@ from scale.server.server import Server
 | Parameter | Required | Default Value | Description |
 | ---                   | --- | ---     | ---                                                           |
 | ec2_environment       | N | 'default' | Set the AWS environment, profiles are in ~/.aws/credentials   | 
-| environment           | N | 'stage'   | Set the environment you wish to set for your host, 
-                                                                                    e.g. 'stage', 'prod'| 
+| environment           | N | 'stage'   | Set the environment you wish to set for your host, e.g. 'stage', 'prod'| 
 | ami                   | N | 'ami-d8bdebb8' | The AMI image to use                                     |
 | instance_type         | N | 't2.nano' | Instance Type to use for server                               |
 | security_group_ids    | [] | []       | List of security group ids                                    |
