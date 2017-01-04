@@ -7,20 +7,20 @@ Table of contents
   * [Installation](#installation)
   * [Basic Usage](#basic-usage)
   * [Tags](#tags)
-      * [Examples](#examples)
+      * [Tags Examples](#tags-examples)
   * [Server](#server)
       * [Server Params](#server-params)
       * [Server Functions](#server-functions)
-      * [Examples](#examples)
+      * [Server Examples](#server-examples)
   * [Disks](#disks)
       * [Disks Params](#disks-params)
       * [Disks Functions](#disks-functions)
       * [Function Parameters](#function-parameters)
-      * [Examples](#examples)
+      * [Disks Examples](#disks-examples)
   * [Security Groups](#security-groups)
       * [Security Group Params](#security-group-params)
       * [Security Group Functions](#security-group-functions)
-      * [Examples](#examples)
+      * [Security Group Examples](#security-group-examples)
           * [Adding Rules](#adding-rules)
           * [Deleting Rules](#deleting-rules)
           * [Deleting All Rules](#deleting-all-rules)
@@ -89,7 +89,7 @@ from scale.server.server import Server
 
 
 
-### Examples:
+### Server Examples:
 
 ```python
 from scale.server.server import Server
@@ -137,7 +137,7 @@ No parameters for Disks
 | get()    |                    | Return devices                                                |
 
 
-# Examples:
+# Disks Examples:
 
 ```python
 from scale.server.disks import Disks
@@ -162,7 +162,7 @@ Importing
 from scale.utils.tags import Tags
 ```
 
-### Examples: 
+### Tags Examples: 
 
 ```python
 from scale.server.server import Server
@@ -231,7 +231,7 @@ sg.create()
 ```           
 
 
-### Examples:
+### Security Group Examples:
 
 Create security group & server then add the security group to the server:
 ```python
