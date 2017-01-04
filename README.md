@@ -159,7 +159,7 @@ Server(keypair='stage', ec2_environment='default', region='us-west-1', **disks=d
 Importing
 
 ```python
-from scale.security.security_group import SecurityGroup
+from scale.utils.tags import Tags
 ```
 
 ### Examples: 

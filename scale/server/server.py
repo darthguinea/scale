@@ -17,6 +17,7 @@ class Server(Config):
                     tags=[],
                     disks=[],
                     dry_run=False):
+
         self.ec2_environment = ec2_environment
         self.environment = environment
         self.ami = ami
