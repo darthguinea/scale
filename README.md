@@ -7,19 +7,24 @@ Table of contents
   * [Installation](#installation)
   * [Basic Usage](#basic-usage)
   * [Tags](#tags)
+      * [Tags Examples](#tags-examples)
   * [Server](#server)
       * [Server Params](#server-params)
       * [Server Functions](#server-functions)
-      * [Examples](#examples)
+      * [Server Examples](#server-examples)
+  * [Autoscaling](#autoscaling)
+      * [Autoscaling Params](#autoscaling-params)
+      * [Autoscaling Functions](#autoscaling-functions)
+      * [Autoscaling Examples](#autoscaling-examples)
   * [Disks](#disks)
       * [Disks Params](#disks-params)
       * [Disks Functions](#disks-functions)
       * [Function Parameters](#function-parameters)
-      * [Examples](#examples)
+      * [Disks Examples](#disks-examples)
   * [Security Groups](#security-groups)
       * [Security Group Params](#security-group-params)
       * [Security Group Functions](#security-group-functions)
-      * [Examples](#examples)
+      * [Security Group Examples](#security-group-examples)
           * [Adding Rules](#adding-rules)
           * [Deleting Rules](#deleting-rules)
           * [Deleting All Rules](#deleting-all-rules)
@@ -55,24 +60,32 @@ python example.py
 
 ## Server:
 
-### Server Params
+Importing:
+
+```python
+from scale.server.server import Server
+```
+
+
+### Server Params:
 
 | Parameter | Required | Default Value | Description |
-| --- | --- | --- | --- |
-| ec2_environment | N | 'default' | Set the AWS environment, profiles are in ~/.aws/credentials | 
-| environment | N | 'stage' | Set the environment you wish to set for your host, e.g. 'stage', 'prod' | 
-| ami | N | 'ami-d8bdebb8' | The AMI image to use |
-| instance_type | N | 't2.nano' | Instance Type to use for server |
-| keypair | Y | None | EC2 Keypair to use |
-| region | N | 'us-east-1' | EC2 Region to use |
-| az | N | None | Availability zone, if one is not set a random one will be picked |
-| name | N | None | The name of the server |
-| tags | N | [] | List of [Tags](#tags) to use |
-| dry_run | N | False | Test build of the server |
+| ---                   | --- | ---     | ---                                                           |
+| ec2_environment       | N | 'default' | Set the AWS environment, profiles are in ~/.aws/credentials   | 
+| environment           | N | 'stage'   | Set the environment you wish to set for your host, e.g. 'stage', 'prod'| 
+| ami                   | N | 'ami-d8bdebb8' | The AMI image to use                                     |
+| instance_type         | N | 't2.nano' | Instance Type to use for server                               |
+| security_group_ids    | [] | []       | List of security group ids                                    |
+| keypair               | Y | None      | EC2 Keypair to use                                            |
+| region                | N | 'us-east-1' | EC2 Region to use                                           |
+| az                    | N | None      | Availability zone, if one is not set a random one will be picked |
+| name                  | N | None      | The name of the server                                        |
+| tags                  | N | []        | List of [Tags](#tags) to use                                  |
+| dry_run               | N | False     | Test build of the server                                      |
 
 
 
-### Server Functions
+### Server Functions:
 
 | Function | Description |
 | --- | --- |
@@ -80,7 +93,7 @@ python example.py
 
 
 
-### Examples:
+### Server Examples:
 
 ```python
 from scale.server.server import Server
@@ -89,7 +102,62 @@ Server(keypair='stage', ec2_environment='default', region='us-west-1', name='my_
 ```
 
 
+## Autoscaling:
+
+Importing:
+```python
+from scale.autoscaling.autoscaling import Autoscaling
+```
+
+
+### Autoscaling Params:
+
+
+| Parameter             | Required |     Default Value  | Description           |
+| ---                   | ---      |      ---           | ---                   |
+| ec2_environment       | N        | 'default'          |                       |
+| region                | N        | 'us-east-1'        |                       |
+| name                  | Y        |  None              |                       |
+| ami                   | N        | 'ami-d8bdebb8'     |                       |
+| instance_type         | N        | 't2.micro'         |                       |
+| keypair               | Y        | 'stage'            |                       |
+| disks                 | N        | []                 |                       |
+| security_group_ids    | N        | []                 |                       |
+| user_data             | N        | None               |                       |
+| desired_capacity      | N        | 0                  |                       |
+| min                   | N        | 0                  |                       |
+| max                   | N        | 0                  |                       |
+| azs                   | N        | []                 |                       |
+
+
+
+### Autoscaling Functions:
+
+| Function | Description |
+| --- | --- |
+| create() | Create Autoscaling Group | 
+
+
+### Autoscaling Examples:
+
+```python
+from scale.autoscaling.autoscaling import Autoscaling
+
+
+asg = Autoscaling(name='s-asg-nginx', region='us-west-1', desired_capacity=0, min=1, max=5)
+
+asg.create()
+```
+
+
 ## Disks:
+
+Importing:
+
+```python
+from scale.server.disks import Disks
+```
+
 
 ### Disks Parameters
 
@@ -121,7 +189,7 @@ No parameters for Disks
 | get()    |                    | Return devices                                                |
 
 
-# Examples:
+# Disks Examples:
 
 ```python
 from scale.server.disks import Disks
@@ -139,6 +207,15 @@ Server(keypair='stage', ec2_environment='default', region='us-west-1', **disks=d
 
 
 ## Tags:
+
+Importing
+
+```python
+from scale.utils.tags import Tags
+```
+
+### Tags Examples: 
+
 ```python
 from scale.server.server import Server
 
@@ -153,6 +230,12 @@ Server(keypair='stage', ec2_environment='default', region='us-west-1', **tags=my
 
 
 ## Security Groups:
+
+Importing:
+
+```python
+from scale.security.security_group import SecurityGroup
+```
 
 
 ### Security Group Params
@@ -200,12 +283,12 @@ sg.create()
 ```           
 
 
-### Examples:
+### Security Group Examples:
 
 Create security group & server then add the security group to the server:
 ```python
 from scale.server.server import Server
-from scale.networking.security_group import SecurityGroup
+from scale.security.security_group import SecurityGroup
 
 
 rules = [{"IP": "10.0.2.1/32", 'FromPort': "80", 'ToPort': "80", 'Protocol': "tcp"},
@@ -250,7 +333,7 @@ sg.delete(rules=[{"IP": "172.16.32.1/32", 'FromPort': "80", 'ToPort': "80", 'Pro
 #### Deleting All Rules:
 This is an example of creating a `Security Group`, adding rules to it, then deleting all of the rules:
 ```python
-from scale.networking.security_group import SecurityGroup
+from scale.security.security_group import SecurityGroup
 
 rules = [{"IP": "10.0.2.1/32", 'FromPort': "80", 'ToPort': "80", 'Protocol': "tcp"}, 
         {"IP": "172.16.32.1/32", 'FromPort': "80", 'ToPort': "80", 'Protocol': "tcp"}]
