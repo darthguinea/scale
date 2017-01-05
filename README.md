@@ -138,6 +138,17 @@ from scale.autoscaling.autoscaling import Autoscaling
 | create() | Create Autoscaling Group | 
 
 
+### Autoscaling Examples:
+
+```python
+from scale.autoscaling.autoscaling import Autoscaling
+
+
+asg = Autoscaling(name='s-asg-nginx', region='us-west-1', desired_capacity=0, min=1, max=5)
+
+asg.create()
+```
+
 
 ## Disks:
 
