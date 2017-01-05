@@ -12,6 +12,10 @@ Table of contents
       * [Server Params](#server-params)
       * [Server Functions](#server-functions)
       * [Server Examples](#server-examples)
+  * [Autoscaling](#autoscaling)
+      * [Autoscaling Params](#autoscaling-params)
+      * [Autoscaling Functions](#autoscaling-functions)
+      * [Autoscaling Examples](#autoscaling-examples)
   * [Disks](#disks)
       * [Disks Params](#disks-params)
       * [Disks Functions](#disks-functions)
@@ -63,7 +67,7 @@ from scale.server.server import Server
 ```
 
 
-### Server Params
+### Server Params:
 
 | Parameter | Required | Default Value | Description |
 | ---                   | --- | ---     | ---                                                           |
@@ -81,7 +85,7 @@ from scale.server.server import Server
 
 
 
-### Server Functions
+### Server Functions:
 
 | Function | Description |
 | --- | --- |
@@ -96,6 +100,43 @@ from scale.server.server import Server
 
 Server(keypair='stage', ec2_environment='default', region='us-west-1', name='my_awesome_server').create()
 ```
+
+
+## Autoscaling:
+
+Importing:
+```python
+from scale.autoscaling.autoscaling import Autoscaling
+```
+
+
+### Autoscaling Params:
+
+
+| Parameter             | Required |     Default Value  | Description           |
+| ---                   | ---      |      ---           | ---                   |
+| ec2_environment       | N        | 'default'          |                       |
+| region                | N        | 'us-east-1'        |                       |
+| name                  | Y        |  None              |                       |
+| ami                   | N        | 'ami-d8bdebb8'     |                       |
+| instance_type         | N        | 't2.micro'         |                       |
+| keypair               | Y        | 'stage'            |                       |
+| disks                 | N        | []                 |                       |
+| security_group_ids    | N        | []                 |                       |
+| user_data             | N        | None               |                       |
+| desired_capacity      | N        | 0                  |                       |
+| min                   | N        | 0                  |                       |
+| max                   | N        | 0                  |                       |
+| azs                   | N        | []                 |                       |
+
+
+
+### Autoscaling Functions:
+
+| Function | Description |
+| --- | --- |
+| create() | Create Autoscaling Group | 
+
 
 
 ## Disks:
