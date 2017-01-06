@@ -4,28 +4,35 @@ from scale.config import Config
 
 
 class Server(Config):
-    def __init__(self, ec2_environment='default',
+    def __init__(self, 
+                    ec2_environment='default',
+                    region='us-east-1',
                     environment='stage',
                     ami='ami-d8bdebb8',
                     instance_type='t2.nano',
+                    security_group_ids=[],
                     keypair=None,
-                    region='us-east-1',
                     az=None,
                     name=None,
                     tags=[],
+                    disks=[],
                     dry_run=False):
+
         self.ec2_environment = ec2_environment
         self.environment = environment
         self.ami = ami
         self.instance_type = instance_type
+        self.security_group_ids = security_group_ids
         self.keypair = keypair
         self.region = region
         self.az = az
         self.name = name
         self.tags = tags
+        self.disks = disks
         self.dry_run = dry_run
 
         super(Server, self).__init__(ec2_environment=ec2_environment, region=self.region)
+
 
     def configure(self):
         if self.az is None:
@@ -46,13 +53,17 @@ class Server(Config):
         self.configure()
     
         params = {
-            'DryRun': self.dry_run,
             'ImageId': self.ami,
             'KeyName': self.keypair,
             'InstanceType': self.instance_type,
+            'SecurityGroupIds': self.security_group_ids,
             'MinCount': 1,
-            'MaxCount': 1
+            'MaxCount': 1,
+            'DryRun': self.dry_run
         }
+
+        if len(self.disks) > 0:
+            params['BlockDeviceMappings'] = self.disks
 
         ec2 = self.session.resource('ec2')
 

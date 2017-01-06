@@ -1,19 +1,28 @@
-from boto.ec2.blockdevicemapping import BlockDeviceType, BlockDeviceMapping
-
 class Disks(object):
-
     def __init__(self):
         self.volumes = []
 
-    def create_disk(self, volume_size=8, device='/dev/xvda'):
-        dev = BlockDeviceType()
-        dev.size = volume_size
-        dev.delete_on_termination = True
-        volume = BlockDeviceMapping()
+    def add(self, name=None, volume_size=8, 
+                device='/dev/sda1', encrypted=False,
+                volume_type='gp2', iops=100):
 
-        volume[device] = dev
+        params = {
+            'VirtualName': name,
+            'DeviceName': device,
+            'Ebs': {
+                'VolumeSize': volume_size,
+                'VolumeType': volume_type,
+                'Encrypted': encyrpted
+            }
+        }
 
-        self.volumes.append(volume)
+        if name is not None:
+            params['VirtualName'] = name
 
-    def disks(self):
+        if volume_type is 'io1':
+            params['Iops'] = iops
+
+        self.volumes.append(params)
+
+    def get(self):
         return self.volumes
