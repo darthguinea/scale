@@ -12,6 +12,10 @@ Table of contents
       * [Server Params](#server-params)
       * [Server Functions](#server-functions)
       * [Server Examples](#server-examples)
+  * [User Data](#user-data)
+      * [User Data Params](#user-data-params)
+      * [User Data Functions](#user-data-functions)
+      * [User Data Examples](#user-data-examples)
   * [Autoscaling](#autoscaling)
       * [Autoscaling Params](#autoscaling-params)
       * [Autoscaling Functions](#autoscaling-functions)
@@ -99,6 +103,42 @@ from scale.server.server import Server
 from scale.server.server import Server
 
 Server(keypair='stage', ec2_environment='default', region='us-west-1', name='my_awesome_server').create()
+```
+
+
+## User Data
+
+Importing:
+```python
+from scale.utils.user_data import UserData
+```
+
+### User Data Params
+
+| Parameter             | Required |     Default Value  | Description           |
+| ---                   | ---      |      ---           | ---                   |
+| user_data_file        | Y        | 'ubuntu'           |                       |
+| org                   | Y        | 'my_org'           |                       |
+| environment           | Y        | 'stage'            |                       |
+| enc_data_bag          | N        | None               |                       |
+| validation_key        | Y        | None               |                       |
+| chef_url              | Y        | None               |                       |
+| chef_role             | Y        | None               |                       |
+
+
+### User Data Functions
+
+| Function | Description |
+| --- | --- |
+| create() | Create and return user data | 
+
+
+### User Data Examples
+
+```python
+from scale.utils.user_data import UserData
+ud = UserData()
+ud.create()
 ```
 
 
