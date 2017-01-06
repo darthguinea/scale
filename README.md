@@ -190,6 +190,7 @@ asg.create()
 ```
 
 
+
 ## Disks:
 
 Importing:
@@ -254,17 +255,41 @@ Importing
 from scale.utils.tags import Tags
 ```
 
+
+### Tags Params:
+
+
+| Parameter             | Required |     Default Value  | Description           |
+| ---                   | ---      |      ---           | ---                   |
+| ec2_environment       | N        | 'default'          |                       |
+| region                | N        | 'us-east-1'        |                       |
+
+
+
+### Tags Functions
+
+| Function | Description |
+| --- | --- | --- |
+| add(name=None, value=None) | Add tag to object |
+| get() | Get tags from objects |
+| get_instance_tags(instance_ids=[]) | Return tags for the requested instances |
+
+
+
 ### Tags Examples: 
 
 ```python
 from scale.server.server import Server
 
-my_tags = Tags()
+ec2_env = 'default'
+region = 'us-east-1'
+
+my_tags = Tags(ec2_environment=ec2_env, region=region)
 
 my_tags.add('chef_role', 'webserver')
 my_tags.add('environment', 'stage')
 
-Server(keypair='stage', ec2_environment='default', region='us-west-1', **tags=my_tags.get()**).create()
+Server(keypair='stage', ec2_environment=ec2_env, region=region, **tags=my_tags.get()**).create()
 ```
 
 
