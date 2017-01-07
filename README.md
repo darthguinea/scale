@@ -18,6 +18,10 @@ Table of contents
       * [User Data Params](#user-data-params)
       * [User Data Functions](#user-data-functions)
       * [User Data Examples](#user-data-examples)
+  * [S3 Bucket](#s3-bucket)
+      * [S3 Bucket Params](#s3-bucket-params)
+      * [S3 Bucket Functions](#s3-bucket-functions)
+      * [S3 Bucket Examples](#s3-bucket-examples)
   * [Autoscaling](#autoscaling)
       * [Autoscaling Params](#autoscaling-params)
       * [Autoscaling Functions](#autoscaling-functions)
@@ -141,6 +145,58 @@ from scale.utils.user_data import UserData
 from scale.utils.user_data import UserData
 ud = UserData()
 ud.create()
+```
+
+
+## S3 Bucket:
+
+Importing:
+```python
+from scale.storage.s3_bucket import S3Bucket
+```
+
+
+## S3 Bucket Params:
+
+| Parameter             | Required |     Default Value  | Description           |
+| ---                   | ---      |      ---           | ---                   |
+| ec2_environment       | Y        | 'default'          |                       |
+| region                | Y        | 'us-east-1'        |                       |
+| name                  | N        | None               |                       |
+
+
+## S3 Bucket Functions:
+
+
+| Function              | Required      | Param         | Description                                           |
+| ---                   | ---           | ---           | ---                                                   |
+| uploaded_files        | N             | name=None     | Bucket name, can also be passed into constructor      |
+|                       | Y             | files=[]      | List of files to upload                               |
+|                       | N             | location=''   | Location in bucket `example/folder/file_loc`          |
+|                       |               |               |                                                       |
+| delete_files()        | N             | name=None     | Bucket name, can also be passed into constructor      |
+|                       | Y             | files=[]      | Files to be deleted from S3 bucket                    |
+
+
+## S3 Bucket Examples:
+
+```python
+from scale.storage.s3_bucket import S3Bucket
+
+s3 = S3Bucket()
+
+files = [
+    'README.md',
+    'setup.py'
+    ]
+
+s3.create_bucket(name='this-is-my-bucket')
+
+s3.upload_files(name='this-is-my-bucket', files=files)
+
+s3.delete_files(name='this-is-my-bucket', files=files)
+
+s3.delete_bucket(name='this-is-my-bucket')
 ```
 
 
