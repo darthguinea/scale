@@ -25,7 +25,7 @@ class SecurityGroup(Config):
         if self.group_id is None and \
                 self.name is not None:
             self.log.warn('Group ID not set, trying to find using name')
-            self.group_id = self.get_existing_sg_id(name=self.name)
+            self.group_id = self.get_sg_id(name=self.name)
             self.log.warn('Found [{id}]'.format(id=self.group_id))
 
 
@@ -52,7 +52,7 @@ class SecurityGroup(Config):
             if e.response['Error']['Code'] == 'InvalidGroup.Duplicate':
                 self.log.error('Security Group [{sg}] already exists! '\
                                 'I will attempt to update the rules'.format(sg=self.name))
-                group_id = self.get_existing_sg_id()
+                group_id = self.get_sg_id()
                 self.add(group_id=group_id, rules=self.rules)
 
         return group_id
@@ -126,7 +126,7 @@ class SecurityGroup(Config):
                                 protocol=rule['Protocol'])
 
 
-    def get_existing_sg_id(self, name=None):
+    def get_sg_id(self, name=None):
         # Fetch the security group ID
         if name is None:
             name = self.name

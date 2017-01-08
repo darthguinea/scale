@@ -31,6 +31,8 @@ Table of contents
       * [Disks Functions](#disks-functions)
       * [Function Parameters](#function-parameters)
       * [Disks Examples](#disks-examples)
+  * [Snapshots](#snapshots)
+      * [Snapshot Params](#disks-params)
   * [Security Groups](#security-groups)
       * [Security Group Params](#security-group-params)
       * [Security Group Functions](#security-group-functions)
@@ -38,6 +40,8 @@ Table of contents
           * [Adding Rules](#adding-rules)
           * [Deleting Rules](#deleting-rules)
           * [Deleting All Rules](#deleting-all-rules)
+  * [Networking](#networking)
+      * [VPC](#vpc)
 
 
 
@@ -275,16 +279,16 @@ No parameters for Disks
 
 #### Function Parameters
 
-| Function | Params             | Default       | Description                                   |
-| ---      | ---                | ---           | ---                                           |
-| add()    | name               | None          | Device Name                                   |
-|          | volume_size        | 8Gb           | Disk Size                                     |
-|          | device             | '/dev/sda1'   | System device, e.g. /dev/xvda, /dev/sda1      |
-|          | encrypted          | False         | Encrypt disk                                  |
-|          | volume_type        | gp2           | Can be 'standard'|'io1'|'gp2'|'sc1'|'st1'     |
-|          | iops               | 100           | Only required when volume_type is iops        |
-|          |                    |                                                               |
-| get()    |                    |               | Return devices                                |
+| Function | Params             | Default       | Description                                                   |
+| ---      | ---                | ---           | ---                                                           |
+| add()    | name               | None          | Device Name                                                   |
+|          | volume_size        | 8Gb           | Disk Size                                                     |
+|          | device             | '/dev/sda1'   | System device, e.g. /dev/xvda, /dev/sda1                      |
+|          | encrypted          | False         | Encrypt disk                                                  |
+|          | volume_type        | gp2           | Can be 'standard'|'io1'|'gp2'|'sc1'|'st1'                     |
+|          | iops               | 100           | Only required when volume_type is iops                        |
+|          |                    |                                                                               |
+| get()    |                    |               | Return devices, pass this into constructor i.e. Server(disks=disks.get()              |
 
 
 # Disks Examples:
@@ -351,34 +355,30 @@ from scale.security.security_group import SecurityGroup
 
 ### Security Group Functions
 
-| Function | Description |
-| --- | --- |
-| create() | Create Security Group | 
-| add() | Add list of rules |
-| add_rule() | Add single rule |
-| delete() | Delete list of rules |
-| delete_rule() | Delete single rule |
-| delete_all_rules() | Delete all of the rules associated to the SG |
-| delete_group() | Delete the security group |
-| get_existing_sg_id() | Find security group using name |
+| Function      | Params             | Default  | Description                                                   |
+| ---           | ---                | ---      | ---                                                           |
+| create()      | none               |          | Create security group, params come from constructor           |
+|               |                    |          |                                                               |
+| add()         | group_id           | None     | Security group Id                                             |
+|               | rules              | []       | List of rules, structure: [{"IP": "10.0.2.1/32", 'FromPort': "80", 'ToPort': "80", 'Protocol': "tcp"}]|
+|               |                    |          |                                                               |
+| delete()      | group_id           | None     | Security group Id                                             |
+|               | rules              | []       | List of rules to delete structure: [{"IP": "10.0.2.1/32", 'FromPort': "80", 'ToPort': "80", 'Protocol': "tcp"}] |
+|               |                    |          |                                                               |
+| delete_all_rules()| group_id       | None     | Security group Id                                             |
+|               |                    |          |                                                               |
+| delete_group()| group_id           | None     | Security group Id                                             |
+|               |                    |          |                                                               |
+| get_sg_id()   | name               | None     | Find security group Id by name                                |
+|               |                    |          |                                                               |
 
 
-`.create()` does not have any parameters, it creates the Security Group based on the values passed into the class.
+`.create()` does not have any parameters, it creates the Security Group based on the parameters passed into the constructor class.
+
 ```
 sg = SecurityGroup()
 sg.create()
 ```
-
-
-`.add_rule()` is used to add a rule to a security group manually
-```
-.add_rule(self, 
-            group_id=None, 
-            ip="127.0.0.1/32", 
-            from_port=80, 
-            to_port=80, 
-            protocol="tcp")
-```           
 
 
 ### Security Group Examples:
