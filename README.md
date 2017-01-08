@@ -284,7 +284,7 @@ No parameters for Disks
 |          | volume_type        | gp2           | Can be 'standard'|'io1'|'gp2'|'sc1'|'st1'     |
 |          | iops               | 100           | Only required when volume_type is iops        |
 |          |                    |                                                               |
-| get()    |                    | Return devices                                                |
+| get()    |                    |               | Return devices                                |
 
 
 # Disks Examples:
