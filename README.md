@@ -32,7 +32,8 @@ Table of contents
       * [Function Parameters](#function-parameters)
       * [Disks Examples](#disks-examples)
   * [Snapshots](#snapshots)
-      * [Snapshot Params](#disks-params)
+      * [Snapshot Params](#snapshot-params)
+      * [Snapshot Functions](#snapshot-functions)
   * [Security Groups](#security-groups)
       * [Security Group Params](#security-group-params)
       * [Security Group Functions](#security-group-functions)
@@ -162,11 +163,11 @@ from scale.storage.s3_bucket import S3Bucket
 
 ## S3 Bucket Params:
 
-| Parameter             | Required |     Default Value  | Description           |
-| ---                   | ---      |      ---           | ---                   |
-| ec2_environment       | Y        | 'default'          |                       |
-| region                | Y        | 'us-east-1'        |                       |
-| name                  | N        | None               |                       |
+| Parameter             | Required |     Default Value  | Description                                                   |
+| ---                   | ---   |      ---           | ---                                                              |
+| ec2_environment       | N     | 'default' | Set the AWS environment, profiles are in ~/.aws/credentials               |
+| environment           | N     | 'stage'   | Set the environment you wish to set for your host, e.g. 'stage', 'prod'   |
+| name                  | N     | None      | Bucket Name, you can also pass it into the function                       |
 
 
 ## S3 Bucket Functions:
@@ -257,7 +258,7 @@ asg.create()
 Importing:
 
 ```python
-from scale.server.disks import Disks
+from scale.storage.disks import Disks
 ```
 
 
@@ -294,7 +295,7 @@ No parameters for Disks
 # Disks Examples:
 
 ```python
-from scale.server.disks import Disks
+from scale.storage.disks import Disks
 from scale.server.server import Server
 
 disks = Disks()
