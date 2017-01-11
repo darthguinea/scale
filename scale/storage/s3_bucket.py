@@ -5,15 +5,13 @@ from scale.config import Config
 class S3Bucket(Config):
     def __init__(self,
                     ec2_environment='default',
-                    region='us-east-1',
                     name=None
                     ):
 
         self.ec2_environment = ec2_environment
-        self.region = region
         self.name = name
         
-        super(S3Bucket, self).__init__(ec2_environment=ec2_environment, region=region)
+        super(S3Bucket, self).__init__(ec2_environment=ec2_environment)
 
         self.s3 = self.session.resource('s3')
 
