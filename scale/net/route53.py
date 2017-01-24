@@ -15,7 +15,7 @@ class Route53(Config):
         super(Route53, self).__init__(ec2_environment=self.ec2_environment, region=self.region)
     
 
-    def create_zone(self, name=None, vpc_id=None, private=True):
+    def create_zone(self, name=None, vpc_id=None, private=False):
         if name is None:
             return
 
