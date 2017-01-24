@@ -2,7 +2,7 @@ import time
 import string
 from scale.config import Config
 
-class DNS(Config):
+class Route53(Config):
 
     def __init__(self,
                     ec2_environment='default',
@@ -12,12 +12,13 @@ class DNS(Config):
         self.ec2_environment = ec2_environment
         self.region = region
 
-        super(DNS, self).__init__(ec2_environment=self.ec2_environment, region=self.region)
+        super(Route53, self).__init__(ec2_environment=self.ec2_environment, region=self.region)
     
 
-    def create_zone(self, name=None, vpc_id=None, private=True):
+    def create_zone(self, name=None, vpc_id=None, private=False):
         if name is None:
-            return
+            self.log.error('You must pass in a HZ name')
+            exit(1)
 
         params = {
             'Name': name,
@@ -40,6 +41,16 @@ class DNS(Config):
         if not self.zone_exists(name=name, private=private):
             client = self.session.client('route53')
             client.create_hosted_zone(**params)
+
+
+    def delete_zone(self, name=None, private=False):
+        if name is None:
+            self.log.error('You must pass in a HZ name')
+            exit(1)
+
+        zone = self.get_zone_data(name=name, private=private)
+        client = self.session.client('route53')
+        client.delete_hosted_zone(Id=zone['Id'])
 
 
     def zone_exists(self, name=None, private=False):
@@ -194,6 +205,8 @@ class DNS(Config):
             }       
         }
 
-        client = self.session.client('route53')
-        client.change_resource_record_sets(**params)
-
+        try:
+            client = self.session.client('route53')
+            client.change_resource_record_sets(**params)
+        except:
+            self.log.error('Unable to find DNS name [{name}]'.format(name=name))
