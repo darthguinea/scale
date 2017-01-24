@@ -50,12 +50,14 @@ class DNS(Config):
 
         zones = client.list_hosted_zones()
 
-        self.log.info('searching for {name}. and {private}'.format(name=name, private=private))
+        self.log.info('searching for {name}. and {private}'\
+                            .format(name=name, private=private))
 
         for zone in zones['HostedZones']:
             if zone['Name'] == '{name}.'.format(name=name) and \
                     private == zone['Config']['PrivateZone']:
-                self.log.warn('Zone [{name}.] Private [{private}] exists already'.format(name=name, private=private))
+                self.log.warn('Zone [{name}.] Private [{private}] exists already'\
+                                .format(name=name, private=private))
                 return True
         return False
 
@@ -67,7 +69,9 @@ class DNS(Config):
         for zone in zones['HostedZones']:
             if zone['Name'] == '{name}.'.format(name=name) and \
                     private == zone['Config']['PrivateZone']:
-                self.log.info('get_zone_data found zone [{zone}]'.format(zone=zone))
+                self.log.info('get_zone_data found zone [{zone}] '\
+                                'private[{private}]'.format(zone=zone,
+                                                        private=private))
                 return zone
 
 
@@ -101,6 +105,7 @@ class DNS(Config):
                 weight=10,
                 ttl=300,
                 private=False,
+                comment=None,
                 ):
 
         if name is None:
@@ -111,20 +116,15 @@ class DNS(Config):
             self.log.error('dns [address] cannot be blank when adding records')
             exit(1)
             
+        if private is True:
+            self.log.info('Private hosted zone')
 
-        id = self.find_hosted_zone_id(name)
+        id = None
+        id = self.find_hosted_zone_id(name, private)
 
-#        params = {
-#    'HostedZoneId': 'ZSCFNKZECA7UZ',
-#    'ChangeBatch': {
-#        'Comment': 'just a test',
-#        'Changes': [
-#            {
-#                'Action': 'CREATE',
-#                'ResourceRecordSet': {
-#                    'Name': 'example.hurried.me',
-#                    'Type': 'A',
-#                    'TTL': 300,}}]}}
+        if id is None:
+            self.log.error('No hosted zone found for [{name}]'\
+                            .format(name=name))
 
         params = {
             'HostedZoneId': id,
@@ -140,12 +140,15 @@ class DNS(Config):
                             }
                         ],
                         'Type': type,
-                        'TTL': 300
+                        'TTL': ttl
                     }
                 }
             ]
             }       
         }
+
+        if comment is not None:
+            params['Comment'] = comment
 
         client = self.session.client('route53')
         client.change_resource_record_sets(**params)
