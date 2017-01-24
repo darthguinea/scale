@@ -101,7 +101,6 @@ class DNS(Config):
                 name=None,
                 address=None,
                 type='A',
-                location='172.32.0.1',
                 weight=10,
                 ttl=300,
                 private=False,
@@ -109,16 +108,13 @@ class DNS(Config):
                 ):
 
         if name is None:
-            self.log.error('dns [name] cannot be blank when adding records')
+            self.log.error('dns [name] cannot be blank when updating records')
             exit(1)
 
         if address is None:
-            self.log.error('dns [address] cannot be blank when adding records')
+            self.log.error('dns [address] cannot be blank when updating records')
             exit(1)
             
-        if private is True:
-            self.log.info('Private hosted zone')
-
         id = None
         id = self.find_hosted_zone_id(name, private)
 
@@ -129,21 +125,21 @@ class DNS(Config):
         params = {
             'HostedZoneId': id,
             'ChangeBatch':{
-            'Changes': [
-                {
-                    'Action': 'UPSERT',
-                    'ResourceRecordSet': {
-                        'Name': name,
-                        'ResourceRecords': [
-                            {
-                                'Value': address
-                            }
-                        ],
-                        'Type': type,
-                        'TTL': ttl
+                'Changes': [
+                    {
+                        'Action': 'UPSERT',
+                        'ResourceRecordSet': {
+                            'Name': name,
+                            'ResourceRecords': [
+                                {
+                                    'Value': address
+                                }
+                            ],
+                            'Type': type,
+                            'TTL': ttl
+                        }
                     }
-                }
-            ]
+                ]
             }       
         }
 
@@ -153,4 +149,51 @@ class DNS(Config):
         client = self.session.client('route53')
         client.change_resource_record_sets(**params)
 
+
+    def delete(self, 
+                name=None,
+                address=None,
+                type='A',
+                ttl=300,
+                private=False,
+                ):
+
+        if name is None:
+            self.log.error('dns [name] cannot be blank when updating records')
+            exit(1)
+
+        if address is None:
+            self.log.error('dns [address] cannot be blank when updating records')
+            exit(1)
+            
+        id = None
+        id = self.find_hosted_zone_id(name, private)
+
+        if id is None:
+            self.log.error('No hosted zone found for [{name}]'\
+                            .format(name=name))
+
+        params = {
+            'HostedZoneId': id,
+            'ChangeBatch':{
+                'Changes': [
+                    {
+                        'Action': 'DELETE',
+                        'ResourceRecordSet': {
+                            'Name': name,
+                            'ResourceRecords': [
+                                {
+                                    'Value': address
+                                }
+                            ],
+                            'Type': type,
+                            'TTL': ttl
+                        }
+                    }
+                ]
+            }       
+        }
+
+        client = self.session.client('route53')
+        client.change_resource_record_sets(**params)
 
