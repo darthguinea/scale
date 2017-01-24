@@ -2,7 +2,7 @@ import time
 import string
 from scale.config import Config
 
-class DNS(Config):
+class Route53(Config):
 
     def __init__(self,
                     ec2_environment='default',
@@ -12,7 +12,7 @@ class DNS(Config):
         self.ec2_environment = ec2_environment
         self.region = region
 
-        super(DNS, self).__init__(ec2_environment=self.ec2_environment, region=self.region)
+        super(Route53, self).__init__(ec2_environment=self.ec2_environment, region=self.region)
     
 
     def create_zone(self, name=None, vpc_id=None, private=True):
