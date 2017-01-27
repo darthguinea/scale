@@ -4,6 +4,8 @@ Use this applcation to deploy or update your EC2 servers, Autoscaling groups, Se
 
 [HowTo Documentation](https://github.com/darthguinea/scale/wiki)
 
+
+**Quick Example:**
 Create an .py file (in this case, example.py), 
 be warned that this will build a server when you execute it:
 ```bash
