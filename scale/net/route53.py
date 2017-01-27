@@ -44,13 +44,51 @@ class Route53(Config):
 
 
     def delete_zone(self, name=None, private=False):
+        client = self.session.client('route53')
+
         if name is None:
             self.log.error('You must pass in a HZ name')
             exit(1)
 
         zone = self.get_zone_data(name=name, private=private)
+
+        if zone == None:
+            self.log.warn('Could not find zone information')
+        else:
+            self.delete_all_records(zone_id=zone['Id'])
+            client.delete_hosted_zone(Id=zone['Id'])
+
+    
+    def delete_all_records(self, zone_id=None):
         client = self.session.client('route53')
-        client.delete_hosted_zone(Id=zone['Id'])
+        records = self.list_all_records(zone_id=zone_id)['ResourceRecordSets']
+        
+        for record in records:
+            try:
+                params = {
+                    'HostedZoneId': zone_id,
+                    'ChangeBatch':{
+                        'Changes': [
+                            {
+                                'Action': 'DELETE',
+                                'ResourceRecordSet': {
+                                    'Name': record['Name'],
+                                    'ResourceRecords': record['ResourceRecords'],
+                                    'Type': record['Type'],
+                                    'TTL': record['TTL']
+                                }
+                            }
+                        ]
+                    }       
+                }
+                client.change_resource_record_sets(**params)
+            except:
+                pass
+    
+
+    def list_all_records(self, zone_id=None):
+        client = self.session.client('route53')
+        return client.list_resource_record_sets(HostedZoneId=zone_id)
 
 
     def zone_exists(self, name=None, private=False):
