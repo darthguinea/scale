@@ -4,3 +4,14 @@ Use this applcation to deploy or update your EC2 servers, Autoscaling groups, Se
 
 [HowTo Documentation](https://github.com/darthguinea/scale/wiki)
 
+Create an .py file (in this case, example.py), 
+be warned that this will build a server when you execute it:
+```bash
+cat >> example.py << EOF
+from scale.server.server import Server
+
+Server(keypair='stage', ec2_environment='default', region='us-west-1', name='my_awesome_server').create()
+EOF
+
+python example.py
+```
