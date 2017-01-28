@@ -9,26 +9,26 @@ class UserData(Config):
         super(UserData, self).__init__()
 
 
-    def open(self, filename=None):
+    def open(self, name=None):
         try:
-            root = os.path.expanduser(filename)
+            root = os.path.expanduser(name)
             file_data = open(root, 'r').read()
 
             self.log.info('Loading user data file [{0}]'.format(root))
 
             return file_data
         except:
-            self.log.error('Could not load user data file [{0}]'.format(filename))
+            self.log.error('Could not load user data file [{0}]'.format(name))
             return None
 
 
     def create(self,
-                    user_file='ubuntu',
+                    name='ubuntu',
                     params=None
                     ):
 
         root = os.path.abspath(os.path.dirname(__file__))
-        path = os.path.join(root, '..', '..', 'data', user_file)
+        path = os.path.join(root, '..', '..', 'data', name)
 
         if params is None:
             return open(path, 'r').read()
