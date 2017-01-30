@@ -1,28 +1,30 @@
 import random
 import botocore
 from scale.config import Config
+from scale.utils.tags import Tags
 
 
 class Server(Config):
+
     def __init__(self, 
                     ec2_environment='default',
                     region='us-east-1',
-                    environment='stage',
-                    ami='ami-d8bdebb8',
+                    ami='ami-e13739f6',
                     instance_type='t2.nano',
                     security_group_ids=[],
+                    subnet_id=None,
                     keypair=None,
                     az=None,
                     name=None,
-                    tags=[],
+                    tags=Tags(),
                     disks=[],
                     dry_run=False):
 
         self.ec2_environment = ec2_environment
-        self.environment = environment
         self.ami = ami
         self.instance_type = instance_type
         self.security_group_ids = security_group_ids
+        self.subnet_id = subnet_id
         self.keypair = keypair
         self.region = region
         self.az = az
@@ -44,14 +46,14 @@ class Server(Config):
             exit(1)
 
         if self.name is not None:
-            self.tags.append({'Key': 'Name', 'Value': self.name})
+            self.tags.add('Name', self.name)
 
 
     def create(self):
         self.log.info('Starting server build')
 
         self.configure()
-    
+
         params = {
             'ImageId': self.ami,
             'KeyName': self.keypair,
@@ -65,6 +67,9 @@ class Server(Config):
         if len(self.disks) > 0:
             params['BlockDeviceMappings'] = self.disks
 
+        if self.subnet_id is not None:
+            params['SubnetId'] = subnet_id
+
         ec2 = self.session.resource('ec2')
 
         try:
@@ -74,6 +79,8 @@ class Server(Config):
                 for instance in instances:
                     instance.create_tags(Tags=self.tags)
 
+        except botocore.exceptions.EndpointConnectionError:
+            self.log.error('Error connecting to AWS, are you sure that you are online?')
         except botocore.exceptions.ClientError as e:
             if e.response['Error']['Code'] == 'InvalidAMIID.NotFound':
                 self.log.error('AMI [{ami}] not found, AMIs are region based '\
