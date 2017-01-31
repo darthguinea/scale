@@ -1,10 +1,13 @@
+from scale.utils.tags import Tags
+
+
 class Filters(object):
 
 	def __new__(self,
 					name=None,
 					instance_type=None,
 					state=None,
-					tags=[],
+					tags=Tags(),
 					):
 
 		filters = []
