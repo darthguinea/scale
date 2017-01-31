@@ -4,39 +4,46 @@
 !_TAG_PROGRAM_NAME	Exuberant Ctags	//
 !_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
 !_TAG_PROGRAM_VERSION	5.8	//
+ASGEvent	scale/autoscaling/asg_event.py	/^class ASGEvent(Config):$/;"	c
 Autoscaling	scale/autoscaling/autoscaling.py	/^class Autoscaling(Config):$/;"	c
 Config	build/lib/scale/config.py	/^class Config(object):$/;"	c
+Config	scale/autoscaling/asg_event.py	/^from scale.config import Config$/;"	i
 Config	scale/autoscaling/autoscaling.py	/^from scale.config import Config$/;"	i
 Config	scale/config.py	/^class Config(object):$/;"	c
-Config	scale/net/dns.py	/^from scale.config import Config$/;"	i
+Config	scale/net/route53.py	/^from scale.config import Config$/;"	i
+Config	scale/net/routing.py	/^from scale.config import Config $/;"	i
 Config	scale/security/security_group.py	/^from scale.config import Config$/;"	i
 Config	scale/server/server.py	/^from scale.config import Config$/;"	i
 Config	scale/storage/s3_bucket.py	/^from scale.config import Config$/;"	i
+Config	scale/utils/user_data.py	/^from scale.config import Config$/;"	i
 ConfigParser	build/lib/scale/config.py	/^import ConfigParser$/;"	i
 ConfigParser	scale/config.py	/^import ConfigParser$/;"	i
-DNS	example.py	/^from scale.net.dns import DNS$/;"	i
-DNS	scale/net/dns.py	/^class DNS(Config):$/;"	c
-Disks	scale/server/disks.py	/^class Disks(object):$/;"	c
+Disks	scale/storage/disks.py	/^class Disks(object):$/;"	c
+Route53	scale/net/route53.py	/^class Route53(Config):$/;"	c
+Routing	scale/net/routing.py	/^class Routing(Config):$/;"	c
 S3Bucket	scale/storage/s3_bucket.py	/^class S3Bucket(Config):$/;"	c
 SecurityGroup	scale/security/security_group.py	/^class SecurityGroup(Config):$/;"	c
 Server	scale/server/server.py	/^class Server(Config):$/;"	c
 Session	build/lib/scale/config.py	/^from boto3.session import Session$/;"	i
 Session	scale/config.py	/^from boto3.session import Session$/;"	i
 Tags	scale/utils/tags.py	/^class Tags(object):$/;"	c
-UserData	scale/utils/user_data.py	/^class UserData(object):$/;"	c
+UserData	example.py	/^from scale.utils.user_data import UserData$/;"	i
+UserData	scale/utils/user_data.py	/^class UserData(Config):$/;"	c
 __init__	build/lib/scale/config.py	/^    def __init__(self, config_files=None, $/;"	m	class:Config
+__init__	scale/autoscaling/asg_event.py	/^    def __init__(self,$/;"	m	class:ASGEvent
 __init__	scale/autoscaling/autoscaling.py	/^    def __init__(self,$/;"	m	class:Autoscaling
 __init__	scale/config.py	/^    def __init__(self, config_files=None, $/;"	m	class:Config
-__init__	scale/net/dns.py	/^    def __init__(self,$/;"	m	class:DNS
+__init__	scale/net/route53.py	/^    def __init__(self,$/;"	m	class:Route53
+__init__	scale/net/routing.py	/^    def __init__(self,$/;"	m	class:Routing
 __init__	scale/security/security_group.py	/^    def __init__(self, $/;"	m	class:SecurityGroup
-__init__	scale/server/disks.py	/^    def __init__(self):$/;"	m	class:Disks
 __init__	scale/server/server.py	/^    def __init__(self, $/;"	m	class:Server
+__init__	scale/storage/disks.py	/^    def __init__(self):$/;"	m	class:Disks
 __init__	scale/storage/s3_bucket.py	/^    def __init__(self,$/;"	m	class:S3Bucket
 __init__	scale/utils/tags.py	/^    def __init__(self):$/;"	m	class:Tags
-__init__	scale/utils/user_data.py	/^    def __init__(self,$/;"	m	class:UserData
-add	scale/net/dns.py	/^    def add(self, name=None,$/;"	m	class:DNS
+__init__	scale/utils/user_data.py	/^    def __init__(self):$/;"	m	class:UserData
+add	scale/net/route53.py	/^    def add(self, $/;"	m	class:Route53
 add	scale/security/security_group.py	/^    def add(self, group_id=None, rules=[]):$/;"	m	class:SecurityGroup
-add	scale/server/disks.py	/^    def add(self, name=None, volume_size=8, $/;"	m	class:Disks
+add	scale/storage/disks.py	/^    def add(self, name=None, volume_size=8, $/;"	m	class:Disks
 add	scale/utils/tags.py	/^    def add(self, name=None, value=None):$/;"	m	class:Tags
 add_rule	scale/security/security_group.py	/^    def add_rule(self, group_id=None, ip="127.0.0.1\/32", $/;"	m	class:SecurityGroup
 author	setup.py	/^    author='Adrian Cook',$/;"	v
@@ -50,38 +57,44 @@ configure	scale/server/server.py	/^    def configure(self):$/;"	m	class:Server
 create	scale/autoscaling/autoscaling.py	/^    def create(self):$/;"	m	class:Autoscaling
 create	scale/security/security_group.py	/^    def create(self):$/;"	m	class:SecurityGroup
 create	scale/server/server.py	/^    def create(self):$/;"	m	class:Server
-create	scale/utils/user_data.py	/^    def create(self):$/;"	m	class:UserData
+create	scale/utils/user_data.py	/^    def create(self,$/;"	m	class:UserData
 create_autoscaling_group	scale/autoscaling/autoscaling.py	/^    def create_autoscaling_group(self):$/;"	m	class:Autoscaling
 create_aws_session	build/lib/scale/config.py	/^    def create_aws_session(self):$/;"	m	class:Config
 create_aws_session	scale/config.py	/^    def create_aws_session(self):$/;"	m	class:Config
 create_bucket	scale/storage/s3_bucket.py	/^    def create_bucket(self, name=None):$/;"	m	class:S3Bucket
 create_launch_configuration	scale/autoscaling/autoscaling.py	/^    def create_launch_configuration(self):$/;"	m	class:Autoscaling
-create_zone	scale/net/dns.py	/^    def create_zone(self, name=None, vpc_id=None, private=True):$/;"	m	class:DNS
+create_route	scale/net/routing.py	/^    def create_route(self, route_table_id=None,$/;"	m	class:Routing
+create_routing_table	scale/net/routing.py	/^    def create_routing_table(self, vpc_id=None):$/;"	m	class:Routing
+create_zone	scale/net/route53.py	/^    def create_zone(self, name=None, vpc_id=None, private=False):$/;"	m	class:Route53
+delete	scale/net/route53.py	/^    def delete(self, $/;"	m	class:Route53
 delete	scale/security/security_group.py	/^    def delete(self, group_id=None, rules=[]):$/;"	m	class:SecurityGroup
+delete_all_records	scale/net/route53.py	/^    def delete_all_records(self, zone_id=None):$/;"	m	class:Route53
 delete_all_rules	scale/security/security_group.py	/^    def delete_all_rules(self, group_id=None):$/;"	m	class:SecurityGroup
 delete_bucket	scale/storage/s3_bucket.py	/^    def delete_bucket(self, name=None):$/;"	m	class:S3Bucket
 delete_files	scale/storage/s3_bucket.py	/^    def delete_files(self, name=None, files=[]):$/;"	m	class:S3Bucket
 delete_group	scale/security/security_group.py	/^    def delete_group(self, group_id=None, name=None):$/;"	m	class:SecurityGroup
 delete_rule	scale/security/security_group.py	/^    def delete_rule(self, group_id=None, ip="127.0.0.1\/32", $/;"	m	class:SecurityGroup
-dns	example.py	/^dns = DNS()$/;"	v
+delete_zone	scale/net/route53.py	/^    def delete_zone(self, name=None, private=False):$/;"	m	class:Route53
 establish_logger	build/lib/scale/config.py	/^    def establish_logger(self):$/;"	m	class:Config
 establish_logger	scale/config.py	/^    def establish_logger(self):$/;"	m	class:Config
 expanduser	build/lib/scale/config.py	/^from os.path import expanduser$/;"	i
 expanduser	scale/config.py	/^from os.path import expanduser$/;"	i
-get	scale/server/disks.py	/^    def get(self):$/;"	m	class:Disks
+find_hosted_zone_id	scale/net/route53.py	/^    def find_hosted_zone_id(self, name=None, private=False):$/;"	m	class:Route53
+get	scale/storage/disks.py	/^    def get(self):$/;"	m	class:Disks
 get	scale/utils/tags.py	/^    def get(self):$/;"	m	class:Tags
-get_enc_data_bag	scale/utils/user_data.py	/^    def get_enc_data_bag(self):$/;"	m	class:UserData
-get_existing_sg_id	scale/security/security_group.py	/^    def get_existing_sg_id(self, name=None):$/;"	m	class:SecurityGroup
-get_validation_key	scale/utils/user_data.py	/^    def get_validation_key(self):$/;"	m	class:UserData
-get_zone_data	scale/net/dns.py	/^    def get_zone_data(self, name=None, private=False):$/;"	m	class:DNS
+get_sg_id	scale/security/security_group.py	/^    def get_sg_id(self, name=None):$/;"	m	class:SecurityGroup
+get_zone_data	scale/net/route53.py	/^    def get_zone_data(self, name=None, private=False):$/;"	m	class:Route53
 install_requires	setup.py	/^    install_requires=['boto3']$/;"	v
+list_all_records	scale/net/route53.py	/^    def list_all_records(self, zone_id=None):$/;"	m	class:Route53
 load_config_files	build/lib/scale/config.py	/^    def load_config_files(self, config_files=None):$/;"	m	class:Config
 load_config_files	scale/config.py	/^    def load_config_files(self, config_files=None):$/;"	m	class:Config
 logging	build/lib/scale/config.py	/^import logging$/;"	i
 logging	scale/config.py	/^import logging$/;"	i
 name	setup.py	/^    name='scale',$/;"	v
+open	scale/utils/user_data.py	/^    def open(self, name=None):$/;"	m	class:UserData
 os	scale/utils/user_data.py	/^import os$/;"	i
 packages	setup.py	/^        packages=['scale'],$/;"	v
+params	example.py	/^params = {$/;"	v
 platforms	setup.py	/^    platforms='any',$/;"	v
 print_tags	scale/utils/tags.py	/^    def print_tags(self):$/;"	m	class:Tags
 random	scale/autoscaling/autoscaling.py	/^import random$/;"	i
@@ -89,8 +102,10 @@ random	scale/server/server.py	/^import random$/;"	i
 region_map	build/lib/scale/config.py	/^    region_map = {$/;"	v	class:Config
 region_map	scale/config.py	/^    region_map = {$/;"	v	class:Config
 setup	setup.py	/^from setuptools import setup$/;"	i
+string	scale/net/route53.py	/^import string$/;"	i
 time	scale/autoscaling/autoscaling.py	/^import time$/;"	i
-time	scale/net/dns.py	/^import time$/;"	i
+time	scale/net/route53.py	/^import time$/;"	i
+ud	example.py	/^ud = UserData()$/;"	v
 upload_files	scale/storage/s3_bucket.py	/^    def upload_files(self, name=None, files=[], location=''):$/;"	m	class:S3Bucket
 version	setup.py	/^    version='0.1',$/;"	v
-zone_exists	scale/net/dns.py	/^    def zone_exists(self, name=None, private=False):$/;"	m	class:DNS
+zone_exists	scale/net/route53.py	/^    def zone_exists(self, name=None, private=False):$/;"	m	class:Route53
