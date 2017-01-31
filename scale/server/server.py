@@ -77,7 +77,7 @@ class Server(Config):
 
             if len(self.tags) > 0:
                 for instance in instances:
-                    instance.create_tags(Tags=self.tags)
+                    instance.create_tags(Tags=self.tags.get())
 
         except botocore.exceptions.EndpointConnectionError:
             self.log.error('Error connecting to AWS, are you sure that you are online?')
