@@ -1,6 +1,6 @@
 .DS_Store
 scale.*
-example.py
+./example*.py
 dist
 build
 *.swp
