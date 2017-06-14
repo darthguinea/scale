@@ -18,4 +18,3 @@ EOF
 
 python example.py
 ```
-
