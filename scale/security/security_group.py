@@ -3,6 +3,7 @@ from scale.config import Config
 
 
 class SecurityGroup(Config):
+
     def __init__(self, 
                     ec2_environment='default',
                     region='us-east-1',

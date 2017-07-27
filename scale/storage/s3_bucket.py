@@ -3,6 +3,7 @@ from scale.config import Config
 
 
 class S3Bucket(Config):
+
     def __init__(self,
                     ec2_environment='default',
                     name=None

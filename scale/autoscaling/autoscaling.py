@@ -5,6 +5,7 @@ from scale.config import Config
 
 
 class Autoscaling(Config):
+
     def __init__(self,
                     ec2_environment='default',
                     region='us-east-1',

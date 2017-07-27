@@ -1,4 +1,5 @@
 class Disks(object):
+
     def __init__(self):
         self.volumes = []
 
